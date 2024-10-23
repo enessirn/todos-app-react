@@ -12,6 +12,7 @@ function App() {
     active: false,
     all: true
   })
+
   const getDatas = (datas)=> {
     setTodo([...todo,datas])
   }
@@ -20,9 +21,7 @@ function App() {
       <h1 className='text-7xl mb-6 select-none text-orange-300'>To do with React</h1>
     <Form getData={getDatas}/>
     <List list={todo} setList={setTodo} status={status}/>
-    <Filters todoList={todo} editStatus={editStatus} status={status}/>
-
-    <footer className='absolute bottom-0 select-none'>Enes Şirin</footer>
+    <Filters todoList={todo} editStatus={editStatus} status={status} setTodo={setTodo} />
     </div>
   );
 }

@@ -1,14 +1,18 @@
 import {useState, useEffect} from 'react'
 
-function Filters({todoList, editStatus, status}) {
+function Filters({todoList, editStatus, status, setTodo}) {
+  const updateItems = () => {
+    const list = todoList.filter((item) => item.isCompleted !== true)
+    setTodo(list)
+    
+  }
 
-  
   return (
     <div className='flex gap-1 justify-between w-full px-4'> 
-    <label className='select-none'> {todoList.length} item left</label>
+    <label className='select-none'> {todoList.length} item</label>
     <div>
     <button 
-    className='bg-orange-300 border px-4 outline-none border rounded select-none transition-all hover:bg-orange-400'
+    className={`bg-orange-300 border px-4 outline-none rounded select-none transition-all hover:bg-orange-400 ${status.all === true && "bg-orange-400"}`}
     id={status.all.toString()}
     onClick={() => editStatus({
       completed: false,
@@ -17,7 +21,7 @@ function Filters({todoList, editStatus, status}) {
     })}
     >All</button>
     <button 
-    className='bg-orange-300 border px-4 outline-none border rounded select-none transition-all hover:bg-orange-400'
+    className={`bg-orange-300 border px-4 outline-none rounded select-none transition-all hover:bg-orange-400 ${status.active === true && "bg-orange-400"}`}
     id={status.active.toString()}
     onClick={() => editStatus({
       completed: false,
@@ -25,7 +29,7 @@ function Filters({todoList, editStatus, status}) {
       all: false
     })}>Active</button>
       <button 
-      className='bg-orange-300 border px-4 outline-none border rounded select-none transition-all hover:bg-orange-400'
+      className={`bg-orange-300 border px-4 outline-none rounded select-none transition-all hover:bg-orange-400 ${status.completed === true && "bg-orange-400"}`}
       id={status.completed.toString()}
       onClick={() => editStatus({
         completed: true,
@@ -35,7 +39,9 @@ function Filters({todoList, editStatus, status}) {
 
     </div>
      
-      <button className='hover:underline'>Clear Completed</button>
+      <button
+      onClick={updateItems}
+      className='hover:underline'>Clear Completed</button>
 
     </div>
   )

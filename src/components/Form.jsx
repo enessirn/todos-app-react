@@ -9,7 +9,6 @@ function Form({getData}) {
         e.preventDefault();
         if (inputText.name.trim()) {
             getData(inputText)
-           console.log(inputText);
             setInputText({
                 name: "",
                 isCompleted: false

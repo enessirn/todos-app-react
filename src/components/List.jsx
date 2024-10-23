@@ -4,14 +4,23 @@ import { FaTrash } from "react-icons/fa6";
 function List({ list, setList, status }) {
   const [activeItems, setActiveItems] = useState([]);
   const [completedItems, setCompletedItems] = useState([]);
-
+    const deleteItem = (e) => {
+      const newList = list.filter((_, i) => i !== e.target.tabIndex); 
+      setList(newList);
+  }
+  
+    
+    
+  
   useEffect(() => {
     if (status.active === true) {
+      setActiveItems([])
       const filteredActive = list.filter(item => item.isCompleted === false);
       setActiveItems(filteredActive);
     }
     
     if (status.completed === true) {
+      setCompletedItems([])
       const filteredCompleted = list.filter(item => item.isCompleted === true);
       setCompletedItems(filteredCompleted);
     }
@@ -20,7 +29,7 @@ function List({ list, setList, status }) {
   const items = (datas) => {
     return datas.map((item, index) => {
       return (
-        <li key={index} className={`${item.isCompleted && "bg-green-300"} rounded-lg flex justify-between my-4 border py-3 px-3 transition-all ease-in-out duration-1000`}>
+        <li key={index} tabIndex={index} className={`${item.isCompleted && "bg-green-300"} rounded-lg flex justify-between my-4 border py-3 px-3 transition-all ease-in-out duration-1000`}>
           <input 
             type="checkbox"
             onChange={() => reeditCheckbox(index)}
@@ -28,8 +37,8 @@ function List({ list, setList, status }) {
             className='w-6'
             id={index}
           />
-          <label className={`${item.isCompleted && "line-through"} text-2xl`}>{item.name}</label>
-          <button><FaTrash className='hover:text-red-700 text-red-500 transition-all ease-in-out duration-800' size={24} /></button>
+          <label className={`${item.isCompleted && "line-through"} text-2xl select-none`}>{item.name}</label>
+          <button tabIndex={index} onClick={deleteItem}><FaTrash className='hover:text-red-700 text-red-500 transition-all ease-in-out duration-800 pointer-events-none' size={24} /></button>
         </li>
       );
     });
